@@ -1,1 +1,1 @@
-# storeall
+# STOREAL Ukraine
