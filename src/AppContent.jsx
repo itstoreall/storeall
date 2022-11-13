@@ -15,8 +15,8 @@ function AppContent() {
     <header className='App-header'>
       <img src={logo} className='App-logo' alt='React' />
       <p>storeall.com.ua in progress...</p>
-      <img src={webpackLogoPng} alt={'test img'} />
-      <img src={nft} alt={'test ing'} />
+      {/* <img src={webpackLogoPng} alt={'test img'} />
+      <img src={nft} alt={'test ing'} /> */}
     </header>
   );
 }

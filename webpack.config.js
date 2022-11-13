@@ -1,4 +1,3 @@
-// const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -6,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
@@ -76,28 +76,8 @@ const jsLoaders = () => {
   return loaders;
 };
 
-module.exports = {
-  context: path.resolve(__dirname, 'src'),
-  mode: 'development',
-  entry: {
-    main: ['@babel/polyfill', './index.js'],
-  },
-  output: {
-    filename: filename('js'),
-    path: path.resolve(__dirname, 'dist'),
-  },
-
-  optimization: optimization(),
-
-  devServer: {
-    port: 8822,
-    hot: isDev,
-  },
-
-  devtool: isDev && 'source-map',
-  // devtool: isDev ? 'source-map' : '',
-
-  plugins: [
+const plagins = () => {
+  const base = [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: filename('css'),
@@ -125,7 +105,37 @@ module.exports = {
         },
       ],
     }),
-  ],
+  ];
+
+  if (isProd) {
+    base.push(new BundleAnalyzerPlugin());
+  }
+
+  return base;
+};
+
+module.exports = {
+  context: path.resolve(__dirname, 'src'),
+  mode: 'development',
+  entry: {
+    main: ['@babel/polyfill', './index.js'],
+  },
+  output: {
+    filename: filename('js'),
+    path: path.resolve(__dirname, 'dist'),
+  },
+
+  optimization: optimization(),
+
+  devServer: {
+    port: 8822,
+    hot: isDev,
+  },
+
+  devtool: isDev && 'source-map',
+  // devtool: isDev ? 'source-map' : '',
+
+  plugins: plagins(),
 
   module: {
     rules: [

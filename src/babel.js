@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const start = async () => {
   return await Promise.resolve('async is working');
 };
@@ -11,5 +13,7 @@ class Util {
 console.log('Util id:', Util.id);
 
 const unused = 42;
+
+console.log('Lodash', _.random(0, 5, true));
 
 export default start;
