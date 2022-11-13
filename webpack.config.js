@@ -1,3 +1,4 @@
+const { DefinePlugin } = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -29,7 +30,7 @@ const optimization = () => {
   return config;
 };
 
-const filename = ext => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
+const filename = ext => (isDev ? `[name].${ext}` : `[name].[chunkhash].${ext}`);
 
 const cssLoaders = extra => {
   const loaders = [
@@ -96,7 +97,7 @@ const plagins = () => {
           to: path.resolve(__dirname, 'dist'),
         },
         {
-          from: path.resolve(__dirname, 'public/favicon.ico'),
+          from: path.resolve(__dirname, 'public/logo192.png'),
           to: path.resolve(__dirname, 'dist'),
         },
         {
@@ -104,6 +105,9 @@ const plagins = () => {
           to: path.resolve(__dirname, 'dist'),
         },
       ],
+    }),
+    new DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
   ];
 
