@@ -61,6 +61,21 @@ const babelOptions = preset => {
   return options;
 };
 
+const jsLoaders = () => {
+  const loaders = [
+    {
+      loader: 'babel-loader',
+      options: babelOptions(),
+    },
+  ];
+
+  // if (isDev) {
+  //   loaders.push('eslint-loader');
+  // }
+
+  return loaders;
+};
+
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
@@ -78,6 +93,9 @@ module.exports = {
     port: 8822,
     hot: isDev,
   },
+
+  devtool: isDev && 'source-map',
+  // devtool: isDev ? 'source-map' : '',
 
   plugins: [
     new CleanWebpackPlugin(),
@@ -112,12 +130,12 @@ module.exports = {
   module: {
     rules: [
       // {
-      //   test: /\.(js|jsx)$/,
+      //   test: /\.(m?js)$/,
       //   exclude: /node_modules/,
-      //   use: ['babel-loader'],
+      //   use: jsLoaders(),
       // },
       {
-        test: /\.(m?js|jsx)$/,
+        test: /\.(m?js)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
