@@ -1,1 +1,1 @@
-# STOREAL Ukraine
+# STOREAL Ukraine .
